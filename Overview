@@ -1,0 +1,26 @@
+# Overview
+2D gameplay- Idea based off Space Raiders game with modern graphics 
+User must purchase a spaceship from our NFT marketplace before he can play. 
+ Multiple spaceships from the 4 different planets we have created for our NFTS ( Hydra, Centaurus, Andromeda, Dorado) 
+ Numbers are up to discussion but a number of different spaceships from each of these planets with different attributes/rarity to progress through the game 
+ Example.; Hydra Spaceship 1 to have rocket launchers level 9 so he can shoot down aliens faster and progress through the game quicker, Hydra spaceship 2 to have rocket launchers level 5 but speed Level 10 so it can move on the map quicker and dodge the attack from the aliens better
+ Each spaceship to have 4/5 different attributes:
+ - Rocket Launchers
+ - Speed
+ - Blast Power
+ - Rarity
+ - Weapon Type
+ 
+These spaceships to be shooting the different objects in front (just like in the original game), different colours of the shooting lasers,  don't have any specific detail as to what the Aliens the spaceships will be shooting at should look like, the aliens should be progressively harder to kill as the player progresses through the levels
+
+For example when all the aliens are shot down, the user progresses one level forward, if the user then gets past 5/10 levels he gets rewarded in our token (ISX). (this is where we would probably want to create the game on a different chain as there is no smart contracts on stellar so we cannot code these rewards). Open to any suggestions about the best way to go forward with this.
+
+We’d have specific token payouts everytime the user progresses through the levels, but these payouts to potentially locked until a minimum withdrawal amount is met.
+Ability to buy different spaceships, to progress through the levels faster and earn more rewards. We want an option for the user to be able to claim different spaceships once he passes certain levels too so he is incentivised to carry out playing the game
+Main incentive for the user is to make his way through the levels to collect the ISX tokens, we could also look at the possibility for the user to yield his tokens for a vested period to earn rewards on his spaceship. For example, the ISX the player eceives can be staked for interest and at the end of the interest period the spaceship is upgraded to a higher level without the user having to purchase extra attributes. 
+
+Simple game controls of just moving up, down, left, right and shoot-
+
+Simple HUD menu layout; 
+Play- Link to buy token -(ISX)- NFT Marketplace- Leader board Challenge someone else maybe?
+In the future we are also releasing a big ecosystem of NFTS so we would like to integrate these into the game too at some point so we could have an NFT marketplace within the game and once an NFT is purchased it can be used in the game to play
