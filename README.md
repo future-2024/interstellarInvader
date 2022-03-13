@@ -28,6 +28,8 @@ NFT is purchased it can be used in the game to play
 
 GAMEPLAY LOOP- 
 
+Claim Tokens feature- User can claim tokens after each game, create a feature which allows them to stake these tokens for yield but they can only stake tokens once a certain level is passed or on a time restricted basis, so if you staked your tokens today, you cannot stake more tokens for the next 48 hrs. This way users will be incentivised to play the game for the longest amount of time in order to grab the biggest amount of tokens.
+
 Health bar- This atribute to be present in every level, will show the health of the player spaceship according to the actual spaceship specifications
 
 Level 1 Gameplay
