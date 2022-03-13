@@ -27,3 +27,9 @@ NFT is purchased it can be used in the game to play
 
 
 GAMEPLAY LOOP- 
+
+Level 1 Gameplay
+The aliens are the weakest in this level so when 1 alien warship is hit 5 times by the player spaceship it disappears. Each level to contain 24 alien warship which appear 8 at a time.
+At any point there is only 8 warships you're shooting, once these are shot down, more alien warships appear from the top of the screen. The level continues until all the spaceships are shot down.
+The warships should be quite slow to hit and they should be firing missiles at the player spaceship quite slowly too so it gives the player a chance to understand the game, also to show the level progression, so Level 1 will be easiest then followed by level 2 etc etc.
+In this level, all the warships should stay and shoot from one diagonal line with no opportunity to move, this will be changed as the levels progress.
