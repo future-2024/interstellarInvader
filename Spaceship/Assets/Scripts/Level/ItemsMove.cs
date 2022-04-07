@@ -8,7 +8,8 @@ public class ItemsMove : MonoBehaviour
 
     //variable for flying itemSpeed
     public float itemSpeed;
-    private PlayerHP PlayerHP;
+    public bool once = true;
+    public PlayerHP hpScript;
     //reference for Rigidbody2D
     Rigidbody2D rigidBody;
 
@@ -18,11 +19,10 @@ public class ItemsMove : MonoBehaviour
         //reference to Rigidbody2D
         rigidBody = GetComponent<Rigidbody2D>();
 
-        PlayerHP = GameObject.Find("SpaceShip").GetComponent<PlayerHP>();
-        InvokeRepeating("ItemMove", 0, 2);
+        hpScript = GameObject.Find("SpaceShip").GetComponent<PlayerHP>();
+        InvokeRepeating("ItemMove", 0, 10);
         //declare direction vector for moving (this will be along the Y-axe)
     }
-
     //will be executed if gameobject is not rendered anymore on screen
     void OnBecameInvisible()
     {
@@ -37,21 +37,14 @@ public class ItemsMove : MonoBehaviour
         //check Tag of touched gameobject
         if (collid.gameObject.tag == "Player")
         {
-            //Time.timeScale = 0;
-            //PlayerHP.gameOver = true;
-            //PlayerHP.gameoverObject.SetActive(true);
-            //delete gameobject from scene
             Destroy (gameObject);
-            //load the same scene again (reload)
-            //SceneManager.LoadScene (SceneManager.GetActiveScene().name);
         }
     }
     private void ItemMove()
     {
-        if (PlayerHP.gameOver == false)
+        if (hpScript.gameOver == false)
         {
             Vector3 ItemMove = new Vector3(Random.Range(-1, 1), Random.Range(0, -5), 0);
-            //change velocity (moving itemSpeed and direction)
             rigidBody.velocity = ItemMove * itemSpeed;
         }
     }

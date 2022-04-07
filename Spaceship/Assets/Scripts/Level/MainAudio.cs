@@ -5,20 +5,14 @@ using UnityEngine;
 public class MainAudio : MonoBehaviour
 {
     AudioSource mainMusic;
-    //public AudioClip mainMusic;
-    //public AudioClip gameOverMusic;
     private PlayerHP playScript;
     private Score scoreScript;
-    //private ModalScript modalScript;
     // Start is called before the first frame update
     void Start()
     {        
-        //AudioSource.PlayClipAtPoint(mainMusic, transform.position);
         playScript = GameObject.Find("SpaceShip").GetComponent<PlayerHP>();
         scoreScript = GameObject.Find("ScoreManger").GetComponent<Score>();
-        //modalScript = GameObject.Find("optionModal").GetComponent<ModalScript>();
         mainMusic = GetComponent<AudioSource>();
-        //mainMusic.Stop();
     }
 
     // Update is called once per frame

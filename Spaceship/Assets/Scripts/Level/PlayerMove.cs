@@ -27,9 +27,6 @@ public class PlayerMove : MonoBehaviour {
         script = GameObject.Find("SpaceShip").GetComponent<PlayerHP>();
         rb = GetComponent<Rigidbody2D>();
         m_ObjectCollider = GetComponent<Collider2D>();
-        
-        //player should stay on its place at game start (or it will move to clickPos (0,0,0) as default Vector3)
-        // clickPos = transform.position;
     }
 
     //will be executed every frame
@@ -61,17 +58,7 @@ public class PlayerMove : MonoBehaviour {
         Debug.Log("here");
     }
     
-    void Update () {
-        //check if left mouse button is pressed
-        // if (Input.GetMouseButton (0)) {
-        //transform mouse screen position to world position
-        // clickPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-        // }
-        //calculate direction vector from ship to clicked point
-        // move = clickPos - transform.position;
-        // if (script.gameOver == false)
-        // {
-    
+    void Update () {    
             widthd = Screen.width / Screen.dpi;
             width = (float)widthd;
 
@@ -80,15 +67,8 @@ public class PlayerMove : MonoBehaviour {
 
             move.x = Input.GetAxis("Horizontal");
             move.y = Input.GetAxis("Vertical");
-    
-
-       // }
     }
     void FixedUpdate () {
-        //Debug.Log("Screen Width : " + Screen.width + "xPos" + transform.position.x);
-        //change velocity to calculated moving vector
-        //z will stay zero. Our ship should not move on Z-Axe
-        //if(transform.position.x > -5 && transform.position.x < 10)
         rb.velocity = new Vector2 (move.x, move.y) * speed;
         if (move.x != 0)
         {

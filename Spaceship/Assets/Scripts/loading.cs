@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class loading : MonoBehaviour
+public class Loading : MonoBehaviour
 {
     public GameObject LoadBar;
     public Text text;

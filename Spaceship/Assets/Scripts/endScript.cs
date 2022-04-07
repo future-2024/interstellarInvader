@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class endScript : MonoBehaviour
+public class EndScript : MonoBehaviour
 {
     public Button quit;
     // Start is called before the first frame update

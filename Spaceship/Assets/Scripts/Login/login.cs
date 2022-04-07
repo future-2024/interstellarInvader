@@ -15,24 +15,18 @@ public class login : MonoBehaviour
     public InputField email;
     public InputField password;
     public Text alert;
+    public GameObject LeftDoor;
+    public GameObject RightDoor;
 
-    //private bool isLoggedIn = false;
-    private string prevName;
-    private string prevPass;
-    public string url;
-    public string url2;
-    private ArrayList data;
+    public string url = GlobalConstant.apiURL + "/users";
+    public string url2 = GlobalConstant.apiURL + "/login";
+    Rigidbody2D LeftDoorRigid;
+    Rigidbody2D RightDoorRigid;
 
     void Start()
     {
-        /*        var user = new userdata()
-                {   
-                    name = "ssss",
-                    email = "kkk@gamil.com",
-                    pass = "Aaaaaaa123"
-                };
-                StartCoroutine(Post(url, user));
-         */
+        LeftDoorRigid = LeftDoor.GetComponent<Rigidbody2D>();
+        RightDoorRigid = RightDoor.GetComponent<Rigidbody2D>();
         Button loginBut = log.GetComponent<Button>();
         loginBut.onClick.AddListener(LogIn);
         Button signBut = sign.GetComponent<Button>();
@@ -65,7 +59,6 @@ public class login : MonoBehaviour
     {
 
         var jsonData = JsonUtility.ToJson(user);
-        //Debug.Log(jsonData);
         using (UnityWebRequest www = UnityWebRequest.Post(url, jsonData))
 
         {
@@ -86,8 +79,6 @@ public class login : MonoBehaviour
                 {
                     // handle the result
                     var result = System.Text.Encoding.UTF8.GetString(www.downloadHandler.data);
-                    //alert.text = result;
-                    Debug.Log(result);
                     if (result == "Registered")
                     {
                         alert.text = "Registered Succefully. Please Log in";
@@ -106,7 +97,6 @@ public class login : MonoBehaviour
                 {
                     //handle the problem
                     alert.text = "Error! data couldn't get.";
-                    //Debug.Log("Error! data couldn't get.");
                 }
             }
         }
@@ -115,7 +105,6 @@ public class login : MonoBehaviour
     {
 
         var jsonData = JsonUtility.ToJson(user);
-        //Debug.Log(jsonData);
         using (UnityWebRequest www = UnityWebRequest.Post(url2, jsonData))
 
         {
@@ -139,9 +128,7 @@ public class login : MonoBehaviour
                     {
                         alert.text = "Welcome!";
                         PlayerPrefs.Save();
-                        //Debug.Log(PlayerPrefs.GetString("name"));
-                        //StartCoroutine(Log(url, user));
-                        Application.LoadLevel("Loading");
+                        StartCoroutine(Open());
                     }
                 }
                 else
@@ -152,79 +139,14 @@ public class login : MonoBehaviour
             }
         }
     }
-}
-    /*
-    public IEnumerator Post(string url, userdata user)
+    public IEnumerator Open()
     {
-        var jsonData = JsonUtility.ToJson(user);
-        Debug.Log(jsonData);
-        using (UnityWebRequest www = UnityWebRequest.Post(url, jsonData))
-        {
-            www.SetRequestHeader("content-type", "application/json");
-            www.uploadHandler.contentType = "application/json";
-            www.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonData));
-            
-        //data = [{"name": username.text }, { "pass": password.text }];
-        //WWWForm form = new WWWForm();
-        //form.AddField("name", username.text);
-        //form.AddField("pass", password.text);
-        //Debug.Log(username.text);
-        //using (var www = UnityWebRequest.Post(url, form))
-        //{
-          
-            yield return www.SendWebRequest();
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                print(www.error);
-            }
-            else
-            {
-                print("Finished Uploading Screenshot");
-                if (www.isDone)
-                {
-                    // handle the result
-                    var result = System.Text.Encoding.UTF8.GetString(www.downloadHandler.data);
-                    Debug.Log(result);
-                    if (result == "true")
-                    {
-                        Application.LoadLevel("Loading");
-                    }
-                }
-                else
-                {
-                    //handle the problem
-                    Debug.Log("Error! data couldn't get.");
-                }
-            }
-        }
-        /*
-        UnityWebRequest www = UnityWebRequest.Post(url, form);
-        
-        yield return www.SendWebRequest();
-            
-        if (www.result == UnityWebRequest.Result.ConnectionError) 
-        {
-            Debug.Log(www.error);
-        }
-        else
-        {
-            if (www.isDone)
-            {
-                // handle the result
-                var result = System.Text.Encoding.UTF8.GetString(www.downloadHandler.data);
-                Debug.Log(result);
-                if(result == "true")
-                {
-                    Application.LoadLevel("Loading");
-                }
-            }
-            else
-            {
-                //handle the problem
-                Debug.Log("Error! data couldn't get.");
-            }
-        }
-        */
-
-
+        Vector3 LeftMove = new Vector3(-1, 0, 0);
+        LeftDoorRigid.velocity = LeftMove * 3;
+        Vector3 RightMove = new Vector3(1, 0, 0);
+        RightDoorRigid.velocity = RightMove * 3;
+        yield return new WaitForSeconds(1);
+        Application.LoadLevel(GlobalConstant.LoadingScene);
+    }
+}
 

@@ -13,7 +13,7 @@ public class HydraScript : MonoBehaviour
         levelBut_1.onClick.AddListener(level1);
         
         Button levelBut_2 = level_2.GetComponent<Button>();
-        levelBut_2.onClick.AddListener(level2fun);
+        levelBut_2.onClick.AddListener(level2);
     }
 
     // Update is called once per frame
@@ -24,11 +24,11 @@ public class HydraScript : MonoBehaviour
     void level1()
     {
         PlayerPrefs.SetString("level", "1");
-        Application.LoadLevel("level_1-1");
+        Application.LoadLevel(GlobalConstant.level1_1);
     }
-    void level2fun()
+    void level2()
     {
         PlayerPrefs.SetString("level", "2");
-        Application.LoadLevel("level_1-2");
+        Application.LoadLevel(GlobalConstant.level1_2);
     }
 }

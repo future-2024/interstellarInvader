@@ -31,21 +31,21 @@ public class SelectMission : MonoBehaviour
     void HydroEvent()
     {
         PlayerPrefs.SetString("land", "hydro");
-        Application.LoadLevel("HydraList");
+        Application.LoadLevel(GlobalConstant.land1Name);
     }
     void CentEvent()
     {
         PlayerPrefs.SetString("land", "cent");
-        Application.LoadLevel("CentList");
+        Application.LoadLevel(GlobalConstant.land2Name);
     }
     void AndroEvent()
     {
         PlayerPrefs.SetString("land", "andro");
-        Application.LoadLevel("AndroList");
+        Application.LoadLevel(GlobalConstant.land3Name);
     }
     void DoradoEvent()
     {
         PlayerPrefs.SetString("land", "dora");
-        Application.LoadLevel("DoradoList");
+        Application.LoadLevel(GlobalConstant.land4Name);
     }
 }

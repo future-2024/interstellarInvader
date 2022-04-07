@@ -32,7 +32,6 @@ public class GameWinScript : MonoBehaviour
         Button nextButC = nLevelBut.GetComponent<Button>();
         nextButC.onClick.AddListener(nextApp);
 
-        //InvokeRepeating("countUp", 0.1f, 0.1f);
         cnt = 0;
     }
     void restartApp()
@@ -44,18 +43,9 @@ public class GameWinScript : MonoBehaviour
         gamewinObject.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    private void Update()
-    {
-
-     //   if (scoreScript.winBool == true)
-    //    {
-            //Debug.Log(scoreScript.winBool);
-    //        InvokeRepeating("countUp", 0.1f, 0.2f);
-     //   }
-    }
     void exitApp()
     {
-        Application.LoadLevel("End");
+        Application.LoadLevel(GlobalConstant.EndScene);
     }
     void countUp()
     {

@@ -29,7 +29,6 @@ public class EnemyBullet : MonoBehaviour
         //check if Player is in the scene
         if (player != null)
         {
-            Debug.Log("EnemyBulletSound");
             //calculate direction vector to Player
             Vector3 dir = player.transform.position - transform.position;
             //calculate angle between X-axe and direction vector

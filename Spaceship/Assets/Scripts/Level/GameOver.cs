@@ -19,8 +19,7 @@ public class GameOver : MonoBehaviour
     }
     void ExitApp()
     {
-        Application.LoadLevel("End");
-        //Application.Quit();
+        Application.LoadLevel(GlobalConstant.EndScene);
     }
     void RestartApp()
     {

@@ -14,7 +14,6 @@ public class ModalScript : MonoBehaviour
     public GameObject modal;
     public bool ModalStatus = false;
     private AudioSource mainSource;
-    //private GameWinScript winScript;
     
     // Start is called before the first frame update
     void Start()
@@ -39,8 +38,6 @@ public class ModalScript : MonoBehaviour
         {
             mainSource.Pause();
         }
-
-        //winScript = GameObject.Find("gameWin").GetComponent<GameWinScript>();
     }
 
     // Update is called once per frame
@@ -58,7 +55,7 @@ public class ModalScript : MonoBehaviour
     }
     void exitApp()
     {
-        Application.LoadLevel("end");
+        Application.LoadLevel(GlobalConstant.EndScene);
     }
     void restartApp()
     {
@@ -68,6 +65,7 @@ public class ModalScript : MonoBehaviour
     }
     void menuApp()
     {
-        Application.LoadLevel("HydraList");
+        // Let's discuss about it.
+        Application.LoadLevel(GlobalConstant.land1Name);
     }
 }

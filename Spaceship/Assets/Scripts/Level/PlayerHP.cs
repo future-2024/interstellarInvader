@@ -29,8 +29,9 @@ public class PlayerHP : MonoBehaviour
     //current HP
     public int hp;
     //maximum HP value, will be used for % count
-    float maxHp;
+    public int maxHp;
     float tm;
+    bool hhh = true;
     float itemTime = 10;
     float preTime;
     public bool gameOver = false;
@@ -48,7 +49,6 @@ public class PlayerHP : MonoBehaviour
     
     void Start()
     {
-
         gameObject.SetActive(false);
         sprite = gameObject.GetComponent<SpriteRenderer>();
         i = 0;
@@ -56,17 +56,16 @@ public class PlayerHP : MonoBehaviour
         img = HealthBar.GetComponent<Image>();
         img3 = ItemBar.GetComponent<Image>();
         tm = 0;
-        //img3.fillAmount = 0;
         img3.fillAmount = tm / itemTime;
-        
+
         //set maximum HP as current HP
-        maxHp = hp;
+        //hp = maxHp;
         //change fill amount between 0 and 1 (here will be 1 or 100%)
-        img.fillAmount = hp / maxHp;
+        img.fillAmount = 1;
 
         img2 = HealthBarNav.GetComponent<Image>();
         //change fill amount between 0 and 1 (here will be 1 or 100%)
-        img2.fillAmount = hp / maxHp;
+        img2.fillAmount = 1;
 
         scoreScript = GameObject.Find("ScoreManger").GetComponent<Score>();
         
@@ -80,8 +79,7 @@ public class PlayerHP : MonoBehaviour
         //check Tag of touched gameobject
         if (other.gameObject.tag == "hp")
         {
-            hp += 20;
-            
+            hp += 5;            
         }
         if (other.gameObject.tag == "shield")
         {
@@ -146,21 +144,24 @@ public class PlayerHP : MonoBehaviour
         //place explosion on gameobject position
         Instantiate(Explosion, transform.position, Quaternion.identity);
         scoreScript.power = hp;
-        //decrease hp value
         
         hp = hp - damage;
-        if( hp < 0)
+        if( hp < 1)
         {
             hp = 0;
         }
-        img.fillAmount = hp / maxHp;
-        img2.fillAmount = hp / maxHp;
+        img.fillAmount = (float)hp / maxHp;
+        img2.fillAmount = (float)hp / maxHp;
     }
     private void Update()
     {
+        if(hp == 0 && hhh == true)
+        {
+            hp = maxHp;
+            hhh = false;
+        }
         if (tm != 0)
         {
-            //Debug.Log(Time.realtimeSinceStartup);
             tm = tm - (Time.realtimeSinceStartup - preTime)/500;
             
             img3.fillAmount = tm / itemTime;
@@ -175,6 +176,7 @@ public class PlayerHP : MonoBehaviour
         }
         if (hp <= 0)
         {
+            Debug.Log("SpaceShip will be died!!!!");
             afterOver();
         }
     }
@@ -193,7 +195,6 @@ public class PlayerHP : MonoBehaviour
             StartCoroutine(overParticle());
             i = 2;
             sprite.enabled = false;
-
         }
     }
     void critical ()
@@ -202,16 +203,11 @@ public class PlayerHP : MonoBehaviour
         Instantiate(fire, transform.position, Quaternion.identity);
         StartCoroutine(NoFire(fire));
     }
-    //void die()
-   // {
-        
-     //   Instantiate(explosion, transform.position, Quaternion.identity);
-     //   StartCoroutine(dieSpaceShip());
-    //}
     IEnumerator NoFire(GameObject objects)
     {
         fires = GameObject.Find("Fire(Clone)");
         bigFires = GameObject.Find("BigFire(Clone)");
+
         //pause function and return to it later in "delayTime" seconds
         yield return new WaitForSeconds(0.001F);
 
@@ -228,10 +224,7 @@ public class PlayerHP : MonoBehaviour
    
     IEnumerator overParticle()
     {
-        //Destroy(gameObject);
-        yield return new WaitForSeconds(3);
-        
-        
+        yield return new WaitForSeconds(3);            
         gameOver = true;
         gameoverObject.SetActive(true);
         Time.timeScale = 0;

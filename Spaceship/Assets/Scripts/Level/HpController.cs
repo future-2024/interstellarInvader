@@ -7,8 +7,7 @@ public class HpController : MonoBehaviour
 {
 
     //variable for health points
-    public int hp;
-    
+    public int hp;    
     //maximum HP value, will be used for % count
     float maxHp1;
     //variable for sound clip

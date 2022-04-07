@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
+using Newtonsoft.Json.Linq;
+
 public class Score : MonoBehaviour
 {
 
     // Start is called before the first frame update
-    //public static Score Instance { get; private set; }
+    // public static Score Instance { get; private set; }SW
+    public string url;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI powerText;
     public TextMeshProUGUI maxScoreText;
@@ -20,19 +24,19 @@ public class Score : MonoBehaviour
     public GameObject winGame;
     public GameObject win;
     public GameObject ship;
-    public PlayerHP hpScript;
+    private PlayerHP hpScript;
+    private ItemManager itemScript;
     public Text startText;
     public Text countText;
     public Text winText;
-    //public static Score Instasnce { get; private set; }
+    private itemdata items;
+
     void Start()
     {
+        itemScript = GameObject.Find("itemmanager").GetComponent<ItemManager>();
         hpScript = GameObject.Find("SpaceShip").GetComponent<PlayerHP>();
         score = 0;
         i = 0;
-        StartCoroutine(loading());
-      //  StartCoroutine(toServer());
-        //winBool = false;
         if (scoreText)
         {
             scoreText.text = "score: 0";
@@ -41,13 +45,23 @@ public class Score : MonoBehaviour
         {
             powerText.text = hpScript.hp.ToString() + "FT";
         }
-        //scoreText.GetComponent<TextMeshProUGUI>().text = "Score: 0";
-        //Score.Instance.
+        
+        items = new itemdata()
+        {
+            land = PlayerPrefs.GetString("land"),
+            level = PlayerPrefs.GetString("level"),
+        };
+
+        StartCoroutine(loading());
+
+        maxScore = 20;
+        hpScript.maxHp = 20;
+        StartCoroutine(Server(items));
     }
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         if (scoreText)
         {
             scoreText.text = "score: " + score.ToString();
@@ -74,16 +88,13 @@ public class Score : MonoBehaviour
             i = 2;
         }
     }
-    /*
-    public IEnumerator Sign(string url, userdata user)
+    
+    public IEnumerator Server(itemdata items)
     {
 
-        var jsonData = JsonUtility.ToJson(user);
-        //Debug.Log(jsonData);
+        var jsonData = JsonUtility.ToJson(items);
         using (UnityWebRequest www = UnityWebRequest.Post(url, jsonData))
-
         {
-
             www.SetRequestHeader("content-type", "application/json");
             www.uploadHandler.contentType = "application/json";
             www.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonData));
@@ -91,43 +102,24 @@ public class Score : MonoBehaviour
 
             if (www.isNetworkError)
             {
-                alert.text = www.error;
                 Debug.Log(www.error);
             }
             else
             {
                 if (www.isDone)
                 {
-                    // handle the result
                     var result = System.Text.Encoding.UTF8.GetString(www.downloadHandler.data);
-                    //alert.text = result;
-                    Debug.Log(result);
-                    if (result == "Registered")
-                    {
-                        alert.text = "Registered Succefully. Please Log in";
-                        username.text = "";
-                        email.text = "";
-                        password.text = "";
-                    }
-                    else if (result == "exist")
-                    {
-                        alert.text = "User already exists";
-                    }
-                    else
-                    {
-                        alert.text = "Please insert a valid information!";
-                    }
+                    var tempArray = JObject.Parse(www.downloadHandler.text);
+                    hpScript.maxHp = (int)tempArray["maxHp"];                  
                 }
                 else
                 {
-                    //handle the problem
-                    alert.text = "Error! data couldn't get.";
-                    //Debug.Log("Error! data couldn't get.");
+                    Debug.Log("Error! data couldn't get.");
                 }
             }
         }
     }
-    */
+
     IEnumerator loading()
     {
         yield return new WaitForSeconds(4);
@@ -144,6 +136,5 @@ public class Score : MonoBehaviour
         particle = true;
         winText.text = " ";
         winGame.SetActive(true);
-        //Time.timeScale = 0;
     }
 }

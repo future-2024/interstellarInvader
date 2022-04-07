@@ -38,7 +38,7 @@ public class HpPlayer : MonoBehaviour
         {
             
             //load current scene (reload)
-//            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         //change fill amount between 0 and 1
         img2.fillAmount = hp2 / maxHp2;

@@ -1,56 +1,59 @@
-using UnityEngine;
 using System.Collections;
-//we need the namespace for access on Unity UI
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using TMPro;
+using Newtonsoft.Json.Linq;
+
 
 public class PlayerShot : MonoBehaviour {
 
     //variable for laser prefab
-    public GameObject[] laser;
+    private string laser;
+    private string support;
     //public LaserShot shotScript;
     //delay between laser shots
     public float delayTime;
-
     //boolean, if laser can be spawned
     bool canShoot = true;
     public string bulletMode = "default";
-    // private int i = 0;
+    private string type = "player";
+
     //will be executed every frame
     void Start ()
     {
-        //shotScript = GameObject.Find("scriptContainer").GetComponent<LaserShot>();
-        
+
+    }
+
+    void OnEnable()
+    {
+        StartCoroutine(Bullet());
     }
     void Update () {
 
         //check if laser can be spawned and right mouse button is pressed
         if (canShoot && Input.GetMouseButton(1)) {
+
             //disable shooting check for next frame
             canShoot = false;
-            //while (i == shotScript.count)
-            Debug.Log("before"+bulletMode);
+            
             if (bulletMode == "parallel")
             {
-                Instantiate(laser[0], transform.position, transform.rotation);
-                Instantiate(laser[0], transform.position + new Vector3(0.4f, 0, 0), transform.rotation);
-                Instantiate(laser[0], transform.position - new Vector3(0.4f, 0, 0), transform.rotation);
-                //Instantiate(laser, transform.position+0.4, transform.rotation);
+                Instantiate(Resources.Load(laser), transform.position, transform.rotation);
+                Instantiate(Resources.Load(laser), transform.position + new Vector3(0.4f, 0, 0), transform.rotation);
+                Instantiate(Resources.Load(laser), transform.position - new Vector3(0.4f, 0, 0), transform.rotation);
             }
 
             if (bulletMode == "default" || bulletMode == "through")
             {
-                Instantiate(laser[0], transform.position, transform.rotation);
-                
-                //Instantiate(laser, transform.position+0.4, transform.rotation);
+                Instantiate(Resources.Load(laser), transform.position, transform.rotation);
             }
+
             if (bulletMode == "bulletpower" || bulletMode == "speed")
             {
-                Instantiate(laser[1], transform.position, transform.rotation);
-                
-                //Instantiate(laser, transform.position+0.4, transform.rotation);
+                Instantiate(Resources.Load(support), transform.position, transform.rotation);
             }
-            //iTween.PunchPosition(gameObject, iTween.Hash("amount", new Vector3(0, -0.1f, 0), "time", 0.2, "delay", 0.005));
             StartCoroutine(NoFire());
         }
     }
@@ -87,16 +90,35 @@ public class PlayerShot : MonoBehaviour {
 
     //coroutine function, we can pause it
     IEnumerator NoFire () {
-
-        //pause function and return to it later in "delayTime" seconds
         yield return new WaitForSeconds (delayTime);
-
-        //enable shooting for next check
         canShoot = true;
     }
     IEnumerator FireAct () { 
         yield return new WaitForSeconds(10);
         bulletMode = "default";
     }
-    
+    public IEnumerator Bullet()
+    {
+         UnityWebRequest www = UnityWebRequest.Get(GlobalConstant.apiURL + "/bullet?tt=player");
+            yield return www.SendWebRequest();
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                if (www.isDone)
+                {
+                    var result = System.Text.Encoding.UTF8.GetString(www.downloadHandler.data);
+                    var tempArray = JObject.Parse(www.downloadHandler.text);
+                    laser = (string)tempArray["first"];
+                    support = (string)tempArray["sec"];
+                }
+                else
+                {
+                    Debug.Log("Error! data couldn't get.");
+                }
+            }
+        
+    }
 }
